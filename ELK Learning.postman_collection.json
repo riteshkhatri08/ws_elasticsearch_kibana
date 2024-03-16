@@ -1,0 +1,1355 @@
+{
+	"info": {
+		"_postman_id": "1755cc19-bf91-48c3-9520-09e6209af8c0",
+		"name": "ELK Learning",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11816296"
+	},
+	"item": [
+		{
+			"name": "Generic",
+			"item": [
+				{
+					"name": "elasticsearch cluster info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200",
+							"host": [
+								"localhost"
+							],
+							"port": "9200"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "elasticsearch cluster health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/_cluster/health",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_cluster",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "elasticsearch all node status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/_nodes/stats",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_nodes",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "part1 - favourite candy",
+			"item": [
+				{
+					"name": "add index",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/favouritecandy",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"favouritecandy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add document to index",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Ritesh\",\r\n    \"candy\": \"5 Star\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/favouritecandy/_doc",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"favouritecandy",
+								"_doc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add document to index  w custom id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Utkarsh\",\r\n    \"candy\": \"eclairs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/favouritecandy/_doc/5",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"favouritecandy",
+								"_doc",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add document to index  w custom id prevent overwrite",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Utkarsh\",\r\n    \"candy\": \"eclairs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/favouritecandy/_create/5",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"favouritecandy",
+								"_create",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get document from index  w custom doc id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/favouritecandy/_doc/5",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"favouritecandy",
+								"_doc",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete document from index  w custom doc id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/favouritecandy/_doc/5",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"favouritecandy",
+								"_doc",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "part2- new_headline_dataset",
+			"item": [
+				{
+					"name": "get 10 documents of index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get exact total no of hits",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"track_total_hits\": true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search data within a timerange",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"range\": {\r\n      \"date\": {\r\n        \"gte\": \"2015-06-20\",\r\n        \"lte\": \"2015-09-22\"\r\n      }\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "aggregate  by_category on category field in data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"aggs\": {\r\n        \"by_category\": {\r\n            \"terms\": {\r\n                \"field\": \"category\",\r\n                \"size\": \"100\"\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "combine match query and aggregate to get popular topic count",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"match\": {\r\n            \"category\": \"ENTERTAINMENT\"\r\n        }\r\n    },\r\n    \"aggregations\": {\r\n        \"popular_in_entertainment\": {\r\n            \"significant_text\": {\r\n                \"field\": \"headline\"\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get doc with headline containing min 1 of specific terms",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"match\": {\r\n            \"headline\":{\r\n            \"query\" : \"Khloe Kardashian Kendall Jenner\"}\r\n        }\r\n    }\r\n  \r\n}\r\n// full recall no precision",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get doc with headline containing all of specific terms",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"match\": {\r\n            \"headline\": {\r\n                \"query\": \"Khloe Kardashian Kendall Jenner\",\r\n                \"operator\": \"and\"\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\n// full precision no recall",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get doc with headline containing min 3 of specific terms",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"match\": {\r\n            \"headline\": {\r\n                \"query\": \"Khloe Kardashian Kendall Jenner\",\r\n                \"minimum_should_match\": 3\r\n            }\r\n        }\r\n    }\r\n}\r\n// balance precision and recall",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "part-3 full text queries",
+			"item": [
+				{
+					"name": "match_phrase instead of just terms",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"match_phrase\": {\r\n            \"headline\": {\r\n            \"query\":\"Shape of You\"\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "multi_match  terms  with multiple fields",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"multi_match\": {\r\n            \"query\": \"Michelle Obama\",\r\n            \"fields\": [\r\n                \"headline\",\r\n                \"authors\",\r\n                \"short_description\"\r\n            ]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "multi_match  terms  with multiple fields with weight",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"multi_match\": {\r\n            \"query\": \"Michelle Obama\",\r\n            \"fields\": [\r\n                \"headline^2\",\r\n                \"authors\",\r\n                \"short_description\"\r\n            ]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "multi_match  a phrase with multiple fields with weight",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"multi_match\": {\r\n            \"fields\": [\r\n                \"headline^2\",\r\n                \"short_description\",\r\n                \"author\"\r\n            ],\r\n            \"query\": \"Michelle Obama\",\r\n            \"type\": \"phrase\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "combined queries - must_clause -  michelle obama in politics category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"bool\": {\r\n            \"must\": [\r\n                {\r\n                    \"multi_match\": {\r\n                        \"query\": \"Michelle Obama\",\r\n                        \"fields\": [\r\n                            \"headline^2\",\r\n                            \"short_description\"\r\n                        ],\r\n                        \"type\": \"phrase\"\r\n                    }\r\n                },\r\n                {\r\n                    \"match\": {\r\n                        \"category\": {\r\n                            \"query\": \"POLITICS\"\r\n                        }\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "combined queries - must_not_clause",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"bool\": {\r\n            \"must\": [\r\n                {\r\n                    \"multi_match\": {\r\n                        \"query\": \"Michelle Obama\",\r\n                        \"fields\": [\r\n                            \"headline^2\",\r\n                            \"short_description\"\r\n                        ],\r\n                        \"type\": \"phrase\"\r\n                    }\r\n                }\r\n            ],\r\n            \"must_not\": [\r\n                {\r\n                    \"match\": {\r\n                        \"category\": \"WEDDINGS\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "combined queries - should clause to change ranking by category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"bool\": {\r\n            \"must\": [\r\n                {\r\n                    \"match_phrase\": {\r\n                        \"headline\": \"Michelle Obama\"\r\n                    }\r\n                }\r\n            ],\r\n            // RANKS BLACK VOICES CATEGORY ARTICLES ON TOP\r\n            \"should\":[\r\n                {\r\n                    \"match\":{\r\n                        \"category\":\"BLACK VOICES\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "combined queries - filter clause to search in  a range",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"bool\": {\r\n            \"must\": [\r\n                {\r\n                    \"match_phrase\": {\r\n                        \"headline\": \"Michelle Obama\"\r\n                    }\r\n                }\r\n            ],\r\n            \"filter\": {\r\n                \"range\": {\r\n                    \"date\": {\r\n                        \"gte\": \"2015-01-01\",\r\n                        \"lte\": \"2017-12-31\"\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/news_headlines/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"news_headlines",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "part4 -Aggregations",
+			"item": [
+				{
+					"name": "remapping dataset",
+					"item": [
+						{
+							"name": "update mapping",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mappings\": {\r\n        \"properties\": {\r\n            \"Country\": {\r\n                \"type\": \"keyword\"\r\n            },\r\n            \"CustomerID\": {\r\n                \"type\": \"long\"\r\n            },\r\n            \"Description\": {\r\n                \"type\": \"text\"\r\n            },\r\n            \"InvoiceDate\": {\r\n                \"type\": \"date\",\r\n                \"format\": \"M/d/yyyy H:m\"\r\n            },\r\n            \"InvoiceNo\": {\r\n                \"type\": \"keyword\"\r\n            },\r\n            \"Quantity\": {\r\n                \"type\": \"long\"\r\n            },\r\n            \"StockCode\": {\r\n                \"type\": \"keyword\"\r\n            },\r\n            \"UnitPrice\": {\r\n                \"type\": \"double\"\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reindex data set",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"source\": {\r\n        \"index\": \"ecomm_index\"\r\n    },\r\n    \"dest\": {\r\n        \"index\": \"ecommerce_data\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/_reindex",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"_reindex"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "clean datase - remove -ve value for unit price",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n{\r\n  \"query\": {\r\n    \"range\": {\r\n      \"UnitPrice\": {\r\n        \"lte\": 0\r\n      }\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_delete_by_query",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_delete_by_query"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Clean dataset - Remove values greater than 500 from the field \"UnitPrice\".",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"query\": {\r\n    \"range\": {\r\n      \"UnitPrice\": {\r\n        \"gte\": 500\r\n      }\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_delete_by_query",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_delete_by_query"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "metric aggregation",
+					"item": [
+						{
+							"name": "Sum of all unit price over all all doc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"aggs\": {\r\n        \"unit_price_sum\": {\r\n            \"sum\": {\r\n                \"field\": \"UnitPrice\"\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "lowest of all unit price over all all doc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\":0,\r\n    \"aggs\": {\r\n        \"lowest_unit_price\":{\r\n            \"min\":{\r\n                \"field\":\"UnitPrice\"\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "highest of all unit price over all all doc Copy",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"aggs\": {\r\n        \"highest_unit_price\": {\r\n            \"max\": {\r\n                \"field\": \"UnitPrice\"\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "all metric aggs of all unit price over all all doc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"aggs\": {\r\n        \"highest_unit_price\": {\r\n            \"stats\": {\r\n                \"field\": \"UnitPrice\"\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "count of  uniqiue customers - cardinality",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 1,\r\n    \"aggs\": {\r\n        \"highest_unit_price\": {\r\n            \"cardinality\": {\r\n                \"field\": \"CustomerID\"\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "count of  uniqiue customers - cardinality Copy",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 1,\r\n    \"aggs\": {\r\n        \"highest_unit_price\": {\r\n            \"cardinality\": {\r\n                \"field\": \"CustomerID\"\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "metric aggs on subset (query + aggs)",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"query\": {\r\n        \"match\": {\r\n            \"Country\": \"Germany\"\r\n        }\r\n    },\r\n    \"aggs\": {\r\n        \"avg_unit_price_from_germany\": {\r\n            \"avg\": {\r\n                \"field\": \"UnitPrice\"\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "bucket aggergation",
+					"item": [
+						{
+							"name": "txn every  8h -  date_historgram_aggregation with fixed interval",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\" : 0 ,\r\n    \"aggs\" : {\r\n        \"transactions_every_8_hours\":{\r\n            \"date_histogram\":{\r\n                \"field\":\"InvoiceDate\",\r\n                \"fixed_interval\": \"8h\"\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "monthly txn - date_historgram_aggregation with calendar interval",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"aggs\": {\r\n        \"transactions_every_month\": {\r\n            \"date_histogram\": {\r\n                \"field\": \"InvoiceDate\",\r\n                \"calendar_interval\": \"1M\",\r\n                // sort results by key desc\r\n                \"order\": {\r\n                    \"_key\": \"desc\"\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "txn ranging in price interval - historgram_aggs with numeric term interval",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"aggs\": {\r\n        \"txn_based_on_price_groups_of_size_50\": {\r\n            \"histogram\": {\r\n                \"field\": \"UnitPrice\",\r\n                \"interval\": \"50\",\r\n                \"order\": {\r\n                    \"_key\": \"desc\"\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Range Aggregations",
+					"item": [
+						{
+							"name": "find txn in custom price ranges - Range Aggs",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"aggs\": {\r\n        \"txn_in_3_price_ranges\": {\r\n            \"range\": {\r\n                \"field\": \"UnitPrice\",\r\n                \"ranges\": [\r\n                    {\r\n                        \"to\": 50\r\n                    },\r\n                    {\r\n                        \"from\": 50,\r\n                        \"to\": 200\r\n                    },\r\n                    {\r\n                        \"from\": 200\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Term Aggregation",
+					"item": [
+						{
+							"name": "find customer with max transactions",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"aggs\": {\r\n        \"top_10_customer\": {\r\n            \"terms\": {\r\n                \"field\": \"CustomerID\",\r\n                \"size\": 10,\r\n                \"order\": {\r\n                    \"_count\": \"desc\"\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Combined Aggregation",
+					"item": [
+						{
+							"name": "find sum of revenue perday - date_histogram aggs + metric aggs (sum)",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"aggs\": {\r\n        \"txn_per_day\": {\r\n            \"date_histogram\": {\r\n                \"field\": \"InvoiceDate\",\r\n                \"calendar_interval\": \"day\"\r\n            },\r\n            \"aggs\": {\r\n                \"daily_revenue\": {\r\n                    \"sum\": {\r\n                        \"script\" : \"doc['UnitPrice'].value * doc['Quantity'].value\"\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "daily revenue and no of unqiue customers per day",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"size\": 0,\r\n    \"aggs\": {\r\n        \"daily_transactions\": {\r\n            \"date_histogram\": {\r\n                \"field\": \"InvoiceDate\",\r\n                \"calendar_interval\": \"day\"\r\n            },\r\n            \"aggs\": {\r\n                \"unique_customers_per_day\": {\r\n                    \"cardinality\": {\r\n                        \"field\": \"CustomerID\"\r\n                    }\r\n                }\r\n                ,\"daily_revenue\":{\r\n                \"sum\":{\r\n                    \"script\":\"doc['UnitPrice'].value * doc['Quantity'].value\"\r\n                }\r\n            }\r\n            }\r\n            \r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9200/ecommerce_data/_search",
+									"host": [
+										"localhost"
+									],
+									"port": "9200",
+									"path": [
+										"ecommerce_data",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Part5 -Mapping",
+			"item": [
+				{
+					"name": "indexing a document a for a produce warehouse",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pineapple\",\r\n    \"botanical_name\": \"Ananas comosus\",\r\n    \"produce_type\": \"Fruit\",\r\n    \"country_of_origin\": \"New Zealand\",\r\n    \"date_purchased\": \"2020-06-02T12:15:35\",\r\n    \"quantity\": 200,\r\n    \"unit_price\": 3.11,\r\n    \"description\": \"a large juicy tropical fruit consisting of aromatic edible yellow flesh surrounded by a tough segmented skin and topped with a tuft of stiff leaves.These pineapples are sourced from New Zealand.\",\r\n    \"vendor_details\": {\r\n        \"vendor\": \"Tropical Fruit Growers of New Zealand\",\r\n        \"main_contact\": \"Hugh Rose\",\r\n        \"vendor_location\": \"Whangarei, New Zealand\",\r\n        \"preferred_vendor\": true\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/temp_index/_doc",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"temp_index",
+								"_doc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "elasticurl",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
