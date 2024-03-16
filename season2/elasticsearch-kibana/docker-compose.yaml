@@ -4,13 +4,16 @@ services:
     container_name: elasticsearch-earthquake
     #build: .
     ports:
-      - '9200:9200'
-      - '9300:9300'
+      - "9200:9200"
+      - "9300:9300"
     environment:
       discovery.type: single-node
       ES_JAVA_OPTS: -Xmx512m -Xms512m
       node.name: es01
       cluster.name: elasticsearch
+      xpack.security.enabled: true
+      ELASTIC_USERNAME: elastic
+      ELASTIC_PASSWORD: mypassword
     volumes:
       - ./elastic/data:/usr/share/elasticsearch/data
     networks:
@@ -20,12 +23,20 @@ services:
     image: docker.elastic.co/kibana/kibana:7.11.1
     container_name: kibana-earthquake
     ports:
-      - '5601:5601'
-      - '9600:9600'
+      - "5601:5601"
+      - "9600:9600"
     environment:
       SERVERNAME: kibana
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
       ES_JAVA_OPTS: -Xmx512m -Xms512m
+      xpack.security.enabled: "true"
+      # xpack.monitoring.enabled: "true"
+      # xpack.reporting.enabled: "true"
+      # xpack.reporting.encryptionKey: "myKey"
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: mypassword
+      # xpack.monitoring.elasticsearch.username: kibana
+      # xpack.monitoring.elasticsearch.password: myPassword
     networks:
       - elasticnet
     depends_on:
