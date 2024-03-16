@@ -1,0 +1,361 @@
+GET _cluster/health
+
+GET _nodes/stats
+
+PUT /favouritecandy
+
+POST /favouritecandy/_doc
+{"firstname": "Utsav","candy": "Alpenlibe"}
+
+POST /favouritecandy/_doc
+{"firstname": "Ritesh","candy": "5 Star"}
+
+PUT /favouritecandy/_doc/22
+{"firstname": "Suraj","candy": "Perk"}
+
+PUT /favouritecandy/_doc/32
+{"firstname": "Rachel","candy": "Rolos"}
+
+PUT /favouritecandy/_doc/32
+{"firstname": "Sandeep","candy": "Dairy Milk"}
+
+GET /favouritecandy/_doc/32
+
+# CREATE WITH custom id but dont overwrite if it exists
+
+
+# Explore our data first
+# retrieve all documents from an index
+GET /news_headlines/_search
+
+# GET exact no of hits
+GET /news_headlines/_search
+{"track_total_hits": true}
+
+
+GET /news_headlines/_search
+{
+  "query": {
+    "Specify the type of query here": {
+      "Enter name of the field here": {
+        "gte": "Enter lowest value of the range here",
+        "lte": "Enter highest value of the range here"
+      }
+    }
+  }
+}
+
+# GET DATA WITHIN A RANGE 
+GET /news_headlines/_search
+{
+  "query": {
+    "range": {
+      "date": {
+        "gte": "2015-06-20",
+        "lte": "2015-09-22"
+      }
+    }
+  }
+}
+
+# AGGREGATE DATA BASED on category field
+GET /news_headlines/_search
+{
+  "aggs": {
+    "by_category": {
+      "terms":{
+        "field": "category",
+        "size": "100"
+        }
+      }
+  }
+}
+
+
+# combo of query and aggs request 
+# get popular topics in a specific category
+GET /news_headlines/_search
+{
+  
+  "query":{
+    "match":{"category":"ENTERTAINMENT"}
+  },
+  "aggregations":{
+    "popular_in_entertainment":{
+      "significant_text":{
+        "field": "headline"
+      }
+    }
+  }
+}
+
+GET /news_headlines/_search
+{
+    "query": {
+        "match": {
+            "headline":{
+            "query" : "Khloe Kardashian Kendall Jenner"}
+        }
+    }
+}
+
+
+
+
+GET /news_headlines/_search
+{
+    "query": {
+        "match": {
+            "headline": {
+                "query": "Khloe Kardashian Kendall Jenner",
+                "operator": "and"
+            }
+        }
+    }
+}
+
+
+
+GET /news_headlines/_search
+{
+    "query": {
+        "match": {
+            "headline": {
+                "query": "Khloe Kardashian Kendall Jenner",
+                "minimum_should_match": 3
+            }
+        }
+    }
+}
+
+#PART 3
+#multi_match Queries quries
+# run atch query on multiple fiels
+GET /news_headlines/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "Michelle Obama",
+      "fields": ["headline", "short_description","authors"]
+    }
+  }
+}
+
+
+
+#multi_match Queries quries
+# run atch query on multiple fiels
+# give more weight to headline field , aka Per-field boosting
+GET /news_headlines/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "Michelle Obama",
+      "fields": ["headline^2", "short_description","authors"]
+    }
+  }
+}
+
+# multi_match Queries on a phrase -party planning
+# give more weight to headline field , aka Per-field boosting
+GET /news_headlines/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "party planning",
+      "fields": ["headline^2", "short_description"]
+      , "type": "phrase"
+    }
+  }
+}
+
+
+#Combinedd queries
+GET news_headlines/_search
+{
+  "query": {
+    "match_phrase": {
+      "headline": "Michelle Obama"
+    }
+  },
+  "aggregations": {
+    "category_mentions": {
+      "terms": {
+        "field": "category",
+        "size": 100
+      }
+    }
+  }
+}
+
+
+# Combied query
+GET /news_headlines/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "multi_match": {
+            "query": "Michelle Obama",
+            "fields": [
+              "headline",
+              "short_description"
+            ],
+            "type": "phrase"
+          }
+        },
+        {
+          "match": {
+            "category": {
+              "query": "POLITICS"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+# mmust not clause
+GET /news_headlines/_search
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "multi_match": {
+                        "query": "Michelle Obama",
+                        "fields": [
+                            "headline^2",
+                            "short_description"
+                        ],
+                        "type": "phrase"
+                    }
+                }
+            ],
+            "must_not": [
+                {
+                    "match": {
+                        "category": "WEDDINGS"
+                    }
+                }
+            ]
+        }
+    }
+}
+
+
+# should clause
+GET /news_headlines/_search
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match_phrase": {
+                        "headline": "Michelle Obama"
+                    }
+                }
+            ],
+            "should":[
+                {
+                    "match":{
+                        "category":"BLACK VOICES"
+                    }
+                }
+            ]
+        }
+    }
+}
+
+
+# filter clause
+GET /news_headlines/_search
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match_phrase": {
+                        "headline": "Michelle Obama"
+                    }
+                }
+            ],
+            "filter": {
+                "range": {
+                    "date": {
+                        "gte": "2015-01-01",
+                        "lte": "2016-12-31"
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+# PART 4 aggregation 
+GET /ecommerce_data
+
+# Remapping data set 
+PUT ecommerce_data
+{
+  "mappings": {
+    "properties": {
+      "Country": {
+        "type": "keyword"
+      },
+      "CustomerID": {
+        "type": "long"
+      },
+      "Description": {
+        "type": "text"
+      },
+      "InvoiceDate": {
+        "type": "date",
+        "format": "M/d/yyyy H:m"
+      },
+      "InvoiceNo": {
+        "type": "keyword"
+      },
+      "Quantity": {
+        "type": "long"
+      },
+      "StockCode": {
+        "type": "keyword"
+      },
+      "UnitPrice": {
+        "type": "double"
+      }
+    }
+  }
+}
+
+GET ecommerce_data/_search
+{
+  "track_total_hits": true
+}
+
+GET ecommerce_data/_search
+{
+  "aggs": {
+    "by_country": {
+      "terms": {
+        "field": "Country"
+      }
+    }
+  }
+}
+
+
+GET ecommerce_data/_search
+{
+  "aggs": {
+    "sum_unit_price": {
+      "sum": {
+        "field": "UnitPrice"
+      }
+    }
+  }
+}
