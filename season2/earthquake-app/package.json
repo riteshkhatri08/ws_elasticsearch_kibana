@@ -1,0 +1,28 @@
+{
+  "name": "earthquake-app",
+  "version": "1.0.0",
+  "description": "Queries earth quake data from 3p server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/server.js"
+  },
+  "keywords": [
+    "earthquake-app",
+    "elastisearch",
+    "kibana",
+    "logstash",
+    "node"
+  ],
+  "author": "Ritesh Khatri",
+  "license": "ISC",
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.12.2",
+    "axios": "^1.6.8",
+    "config": "^3.3.11",
+    "cors": "^2.8.5",
+    "express": "^4.18.3",
+    "log-timestamp": "^0.3.0",
+    "nodemon": "^3.1.0"
+  }
+}
